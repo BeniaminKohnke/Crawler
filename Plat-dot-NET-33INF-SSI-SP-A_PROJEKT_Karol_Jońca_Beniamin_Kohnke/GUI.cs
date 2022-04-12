@@ -15,23 +15,13 @@ namespace Crawler
         {
             if(!string.IsNullOrEmpty(UrlTextBox.Text) && !_algorithm.IsRunning)
             {
-                new Thread(() => _algorithm.CrawlPage(UrlTextBox.Text, DomainTextBox.Text, UrlRegexTextBox.Text)).Start();
+                _algorithm.Url = UrlTextBox.Text;
+                _algorithm.StartingUrl = StartingPageTextBox.Text;
+                _algorithm.Regex = UrlRegexTextBox.Text;
+                _algorithm.Domain = DomainTextBox.Text;
+
+                new Thread(() => _algorithm.CrawlPage()).Start();
             }
-        }
-
-        private void UrlLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void UrlTextBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void XPathTextBox_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void StopButton_Click(object sender, EventArgs e)
@@ -39,9 +29,12 @@ namespace Crawler
             _algorithm.AbortCurrentAction();
         }
 
-        private void GUI_Load(object sender, EventArgs e)
+        private void Update_Tick(object sender, EventArgs e)
         {
-
+            if(Logger.TryGetLog(out var log) && log != null)
+            {
+                LogBox.Items.Add(log);
+            }
         }
     }
 }
