@@ -13,5 +13,10 @@ namespace Crawler.CrawlerFiles
         {
             return 0;
         }
+
+        public static void SaveLog(Logger.LogLevel level, string message, string memberName)
+        {
+
+        }
     }
 }

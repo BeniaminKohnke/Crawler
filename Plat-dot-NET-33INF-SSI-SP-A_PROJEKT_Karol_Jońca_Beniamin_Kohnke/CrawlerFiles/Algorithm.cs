@@ -6,10 +6,13 @@ namespace Crawler.CrawlerFiles
 {
     internal sealed class Algorithm
     {
+        public string Url { get; set; } = string.Empty;
+        public string StartingUrl { get; set; } = string.Empty;
+        public string Domain { get; set; } = string.Empty;
+        public string Regex { get; set; } = string.Empty;
+
         public bool IsRunning { get; private set; } = false;
-        private readonly TimeSpan _timeout = new(0,10,0);
         private readonly TimeSpan _delay = new(0, 0, 1);
-        private DateTime _timeoutStart;
 
         private readonly IWebDriver _edgeDriver = new EdgeDriver();
 
@@ -22,16 +25,16 @@ namespace Crawler.CrawlerFiles
         //@$"https://store.steampowered.com/search/results/?query&start={x*50}&count=50&dynamic_data=&snr=1_7_7_230_7&infinite=1" <-- api
         //https://store.epicgames.com/pl/browse?sortBy=releaseDate&sortDir=DESC&count=40
         //regex: ^https://store.epicgames.com/pl/p/\S+$
+        ////a[@role='link' and @aria-label and not(@id)]
         //needs expansion
-        public void CrawlPage(string url, string domain, string regex)
+        public void CrawlPage()
         {
             IsRunning = true;
-            var productRegex = new Regex(regex, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            _timeoutStart = DateTime.Now;
+            var productRegex = new Regex(Regex, RegexOptions.Compiled | RegexOptions.IgnoreCase);
             var urlQueue = new Queue<string>();
             var urlsToSkip = new List<string>();
-            var shopId = DataAccess.GetShopIdFromUrl(url);
-            urlQueue.Enqueue(url);
+            var shopId = DataAccess.GetShopIdFromUrl(Url);
+            urlQueue.Enqueue(StartingUrl);
 
             while(urlQueue.TryDequeue(out var nextUrl) && IsRunning)
             {
@@ -46,11 +49,11 @@ namespace Crawler.CrawlerFiles
                         var newUrl = node.GetAttribute("href");
                         if (newUrl != null)
                         {
-                            if(newUrl.Contains(domain))
+                            if(newUrl.Contains(Domain))
                             {
                                 if (newUrl[0] == '/')
                                 {
-                                    newUrl = "https://store.epicgames.com" + newUrl;
+                                    newUrl = Url + newUrl;
                                 }
 
                                 if (productRegex.IsMatch(newUrl))
@@ -65,13 +68,12 @@ namespace Crawler.CrawlerFiles
 
                                 if (!urlsToSkip.Contains(newUrl))
                                 {
+                                    Logger.Log(Logger.LogLevel.INFO, $"Algorithm found: {newUrl}");
                                     urlQueue.Enqueue(newUrl);
+                                    urlsToSkip.Add(newUrl);
                                 }
                             }
-                            else
-                            {
-                                urlsToSkip.Add(newUrl);
-                            }
+                            urlsToSkip.Add(newUrl);
                         }
                     }
                     catch
@@ -86,24 +88,12 @@ namespace Crawler.CrawlerFiles
 
         private Product? GetProductFromNode(IWebElement htmlNode, string url)
         {
-            //var url = htmlNode.GetAttribute("href");
-
             if (!string.IsNullOrEmpty(url))
             {
                 return new(string.Empty, url, string.Empty);
             }
 
             return null;
-        }
-
-        private bool CheckTimeout(bool reset = false)
-        {
-            if(!reset)
-            {
-                return DateTime.Now - _timeoutStart > _timeout;
-            }
-            _timeoutStart = DateTime.Now;
-            return false;
         }
 
         public void AbortCurrentAction()
