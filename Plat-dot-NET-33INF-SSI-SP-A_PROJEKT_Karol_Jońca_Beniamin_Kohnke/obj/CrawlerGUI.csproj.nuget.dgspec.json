@@ -1,0 +1,149 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\benia\\Documents\\GitHub\\DOTNETCRAWLER\\Plat-dot-NET-33INF-SSI-SP-A_PROJEKT_Karol_Jońca_Beniamin_Kohnke\\CrawlerGUI.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\benia\\Documents\\GitHub\\DOTNETCRAWLER\\Crawler\\Crawler.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\benia\\Documents\\GitHub\\DOTNETCRAWLER\\Crawler\\Crawler.csproj",
+        "projectName": "Crawler",
+        "projectPath": "C:\\Users\\benia\\Documents\\GitHub\\DOTNETCRAWLER\\Crawler\\Crawler.csproj",
+        "packagesPath": "C:\\Users\\benia\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\benia\\Documents\\GitHub\\DOTNETCRAWLER\\Crawler\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\benia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Google.Apis.Drive.v3": {
+              "target": "Package",
+              "version": "[1.57.0.2663, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "Selenium.WebDriver": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
+            "Selenium.WebDriver.MSEdgeDriver": {
+              "target": "Package",
+              "version": "[100.0.1185.36, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\benia\\Documents\\GitHub\\DOTNETCRAWLER\\Plat-dot-NET-33INF-SSI-SP-A_PROJEKT_Karol_Jońca_Beniamin_Kohnke\\CrawlerGUI.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\benia\\Documents\\GitHub\\DOTNETCRAWLER\\Plat-dot-NET-33INF-SSI-SP-A_PROJEKT_Karol_Jońca_Beniamin_Kohnke\\CrawlerGUI.csproj",
+        "projectName": "CrawlerGUI",
+        "projectPath": "C:\\Users\\benia\\Documents\\GitHub\\DOTNETCRAWLER\\Plat-dot-NET-33INF-SSI-SP-A_PROJEKT_Karol_Jońca_Beniamin_Kohnke\\CrawlerGUI.csproj",
+        "packagesPath": "C:\\Users\\benia\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\benia\\Documents\\GitHub\\DOTNETCRAWLER\\Plat-dot-NET-33INF-SSI-SP-A_PROJEKT_Karol_Jońca_Beniamin_Kohnke\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\benia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0-windows7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0-windows7.0": {
+            "targetAlias": "net6.0-windows",
+            "projectReferences": {
+              "C:\\Users\\benia\\Documents\\GitHub\\DOTNETCRAWLER\\Crawler\\Crawler.csproj": {
+                "projectPath": "C:\\Users\\benia\\Documents\\GitHub\\DOTNETCRAWLER\\Crawler\\Crawler.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0-windows7.0": {
+          "targetAlias": "net6.0-windows",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WindowsForms": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

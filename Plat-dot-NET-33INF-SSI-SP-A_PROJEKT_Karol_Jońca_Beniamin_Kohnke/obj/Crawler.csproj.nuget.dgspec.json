@@ -44,6 +44,10 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "dependencies": {
+            "Google.Apis.Drive.v3": {
+              "target": "Package",
+              "version": "[1.57.0.2663, )"
+            },
             "HtmlAgilityPack": {
               "target": "Package",
               "version": "[1.11.42, )"
@@ -59,10 +63,6 @@
             "Selenium.WebDriver.MSEdgeDriver": {
               "target": "Package",
               "version": "[99.0.1150.46, )"
-            },
-            "System.Data.SqlClient": {
-              "target": "Package",
-              "version": "[4.8.3, )"
             }
           },
           "imports": [
@@ -83,7 +83,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

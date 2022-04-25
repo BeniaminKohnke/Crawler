@@ -1,0 +1,12 @@
+C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\Crawler\bin\Debug\net6.0\Crawler.deps.json
+C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\Crawler\bin\Debug\net6.0\Crawler.dll
+C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\Crawler\bin\Debug\net6.0\Crawler.pdb
+C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\Crawler\obj\Debug\net6.0\Crawler.csproj.AssemblyReference.cache
+C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\Crawler\obj\Debug\net6.0\Crawler.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\Crawler\obj\Debug\net6.0\Crawler.AssemblyInfoInputs.cache
+C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\Crawler\obj\Debug\net6.0\Crawler.AssemblyInfo.cs
+C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\Crawler\obj\Debug\net6.0\Crawler.csproj.CoreCompileInputs.cache
+C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\Crawler\obj\Debug\net6.0\Crawler.dll
+C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\Crawler\obj\Debug\net6.0\refint\Crawler.dll
+C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\Crawler\obj\Debug\net6.0\Crawler.pdb
+C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\Crawler\obj\Debug\net6.0\ref\Crawler.dll

@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "IOkp6mLHWkJdTVyaT2wM5c9o0gWPSBHzrRaHBUs+9ps+QVNdXDB5HyyqUiJkP/t2uG2P14H7L+B5Y06xWUowhw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\benia\\Documents\\GitHub\\DOTNETCRAWLER\\Crawler\\Crawler.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\benia\\.nuget\\packages\\google.apis\\1.57.0\\google.apis.1.57.0.nupkg.sha512",
+    "C:\\Users\\benia\\.nuget\\packages\\google.apis.auth\\1.57.0\\google.apis.auth.1.57.0.nupkg.sha512",
+    "C:\\Users\\benia\\.nuget\\packages\\google.apis.core\\1.57.0\\google.apis.core.1.57.0.nupkg.sha512",
+    "C:\\Users\\benia\\.nuget\\packages\\google.apis.drive.v3\\1.57.0.2663\\google.apis.drive.v3.1.57.0.2663.nupkg.sha512",
+    "C:\\Users\\benia\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\benia\\.nuget\\packages\\selenium.webdriver\\4.1.0\\selenium.webdriver.4.1.0.nupkg.sha512",
+    "C:\\Users\\benia\\.nuget\\packages\\selenium.webdriver.msedgedriver\\100.0.1185.36\\selenium.webdriver.msedgedriver.100.0.1185.36.nupkg.sha512"
+  ],
+  "logs": []
+}

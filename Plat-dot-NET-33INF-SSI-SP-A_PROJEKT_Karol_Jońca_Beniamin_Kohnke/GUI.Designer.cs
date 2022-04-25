@@ -1,4 +1,4 @@
-﻿namespace Crawler
+﻿namespace CrawlerGUI
 {
     partial class GUI
     {
@@ -73,11 +73,11 @@
             this.DomainTextBox = new System.Windows.Forms.TextBox();
             this.UrlTextBox = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.Update = new System.Windows.Forms.Timer(this.components);
-            this.FolderNameLabel = new System.Windows.Forms.Label();
-            this.FolderNameBox = new System.Windows.Forms.TextBox();
-            this.SaveConfigButton = new System.Windows.Forms.Button();
             this.LoadConfigButton = new System.Windows.Forms.Button();
+            this.SaveConfigButton = new System.Windows.Forms.Button();
+            this.FolderNameBox = new System.Windows.Forms.TextBox();
+            this.FolderNameLabel = new System.Windows.Forms.Label();
+            this.Update = new System.Windows.Forms.Timer(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -169,7 +169,8 @@
             this.ExtractionMethodBox.FormattingEnabled = true;
             this.ExtractionMethodBox.Items.AddRange(new object[] {
             "Data scraper",
-            "Client URL request"});
+            "Client URL request",
+            "Only Crawler"});
             this.ExtractionMethodBox.Location = new System.Drawing.Point(12, 162);
             this.ExtractionMethodBox.Name = "ExtractionMethodBox";
             this.ExtractionMethodBox.Size = new System.Drawing.Size(504, 23);
@@ -521,26 +522,14 @@
             this.tabPage3.Text = "Save/Load";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // Update
+            // LoadConfigButton
             // 
-            this.Update.Enabled = true;
-            this.Update.Tick += new System.EventHandler(this.Update_Tick);
-            // 
-            // FolderNameLabel
-            // 
-            this.FolderNameLabel.AutoSize = true;
-            this.FolderNameLabel.Location = new System.Drawing.Point(12, 13);
-            this.FolderNameLabel.Name = "FolderNameLabel";
-            this.FolderNameLabel.Size = new System.Drawing.Size(73, 15);
-            this.FolderNameLabel.TabIndex = 0;
-            this.FolderNameLabel.Text = "Folder name";
-            // 
-            // FolderNameBox
-            // 
-            this.FolderNameBox.Location = new System.Drawing.Point(12, 31);
-            this.FolderNameBox.Name = "FolderNameBox";
-            this.FolderNameBox.Size = new System.Drawing.Size(510, 23);
-            this.FolderNameBox.TabIndex = 1;
+            this.LoadConfigButton.Location = new System.Drawing.Point(93, 60);
+            this.LoadConfigButton.Name = "LoadConfigButton";
+            this.LoadConfigButton.Size = new System.Drawing.Size(75, 23);
+            this.LoadConfigButton.TabIndex = 3;
+            this.LoadConfigButton.Text = "Load";
+            this.LoadConfigButton.UseVisualStyleBackColor = true;
             // 
             // SaveConfigButton
             // 
@@ -551,14 +540,26 @@
             this.SaveConfigButton.Text = "Save";
             this.SaveConfigButton.UseVisualStyleBackColor = true;
             // 
-            // LoadConfigButton
+            // FolderNameBox
             // 
-            this.LoadConfigButton.Location = new System.Drawing.Point(93, 60);
-            this.LoadConfigButton.Name = "LoadConfigButton";
-            this.LoadConfigButton.Size = new System.Drawing.Size(75, 23);
-            this.LoadConfigButton.TabIndex = 3;
-            this.LoadConfigButton.Text = "Load";
-            this.LoadConfigButton.UseVisualStyleBackColor = true;
+            this.FolderNameBox.Location = new System.Drawing.Point(12, 31);
+            this.FolderNameBox.Name = "FolderNameBox";
+            this.FolderNameBox.Size = new System.Drawing.Size(510, 23);
+            this.FolderNameBox.TabIndex = 1;
+            // 
+            // FolderNameLabel
+            // 
+            this.FolderNameLabel.AutoSize = true;
+            this.FolderNameLabel.Location = new System.Drawing.Point(12, 13);
+            this.FolderNameLabel.Name = "FolderNameLabel";
+            this.FolderNameLabel.Size = new System.Drawing.Size(73, 15);
+            this.FolderNameLabel.TabIndex = 0;
+            this.FolderNameLabel.Text = "Folder name";
+            // 
+            // Update
+            // 
+            this.Update.Enabled = true;
+            this.Update.Tick += new System.EventHandler(this.Update_Tick);
             // 
             // GUI
             // 

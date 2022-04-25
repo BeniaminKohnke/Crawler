@@ -1,6 +1,6 @@
-using Crawler.CrawlerFiles;
+using Crawler;
 
-namespace Crawler
+namespace CrawlerGUI
 {
     public partial class GUI : Form
     {

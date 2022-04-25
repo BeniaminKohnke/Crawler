@@ -1,4 +1,4 @@
-namespace Crawler
+namespace CrawlerGUI
 {
     internal static class Program
     {
