@@ -56,6 +56,14 @@
           }
         }
       },
+      "HtmlAgilityPack/1.11.42": {
+        "runtime": {
+          "lib/netstandard2.0/HtmlAgilityPack.dll": {
+            "assemblyVersion": "1.11.42.0",
+            "fileVersion": "1.11.42.0"
+          }
+        }
+      },
       "Newtonsoft.Json/13.0.1": {
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {
@@ -75,7 +83,7 @@
           }
         }
       },
-      "Selenium.WebDriver.MSEdgeDriver/99.0.1150.46": {}
+      "Selenium.WebDriver.MSEdgeDriver/100.0.1185.36": {}
     }
   },
   "libraries": {
@@ -107,6 +115,13 @@
       "path": "google.apis.drive.v3/1.57.0.2663",
       "hashPath": "google.apis.drive.v3.1.57.0.2663.nupkg.sha512"
     },
+    "HtmlAgilityPack/1.11.42": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LDc1bEfF14EY2DZzak4xvzWvbpNXK3vi1u0KQbBpLUN4+cx/VrvXhgCAMSJhSU5vz0oMfW9JZIR20vj/PkDHPA==",
+      "path": "htmlagilitypack/1.11.42",
+      "hashPath": "htmlagilitypack.1.11.42.nupkg.sha512"
+    },
     "Newtonsoft.Json/13.0.1": {
       "type": "package",
       "serviceable": true,
@@ -121,12 +136,12 @@
       "path": "selenium.webdriver/4.1.0",
       "hashPath": "selenium.webdriver.4.1.0.nupkg.sha512"
     },
-    "Selenium.WebDriver.MSEdgeDriver/99.0.1150.46": {
+    "Selenium.WebDriver.MSEdgeDriver/100.0.1185.36": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ykyrOPE7a2nlZLDCRtysEHQpgERDA50Tyrw7JjDUlUz3jXfMhx8Z7zlWeklPTtnDqfqcSo2lqCewCPrUPoRVEA==",
-      "path": "selenium.webdriver.msedgedriver/99.0.1150.46",
-      "hashPath": "selenium.webdriver.msedgedriver.99.0.1150.46.nupkg.sha512"
+      "sha512": "sha512-tQfNKwSrwnJ63DFB8SoZOUg/ZxAdB/xnBWnmojJhEyyGAx5W82ktuFvPrr9vSzzz3TOswg8pfwmBRIKEviBs+w==",
+      "path": "selenium.webdriver.msedgedriver/100.0.1185.36",
+      "hashPath": "selenium.webdriver.msedgedriver.100.0.1185.36.nupkg.sha512"
     }
   }
 }

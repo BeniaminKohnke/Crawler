@@ -10,7 +10,9 @@ namespace Crawler
         private readonly List<string> _storedUrls = new();
 
         private readonly IWebDriver _edgeDriver = new EdgeDriver();
-        
+
+        private CrawlerConfiguration _configuration = new();
+
         public string Url { get; set; } = string.Empty;
         public string StartingUrl { get; set; } = string.Empty;
         public string Domain { get; set; } = string.Empty;
@@ -24,77 +26,135 @@ namespace Crawler
             _edgeDriver.Quit();
         }
 
-        //@$"https://store.steampowered.com/search/results/?query&start={x*50}&count=50&dynamic_data=&snr=1_7_7_230_7&infinite=1" <-- api
-        //https://store.epicgames.com/pl/browse?sortBy=releaseDate&sortDir=DESC&count=40
-        //regex: ^https://store.epicgames.com/pl/p/\S+$
-        ////a[@role='link' and @aria-label and not(@id)]
-        //needs expansion
-        public void CrawlPage()
+        public void LoadConfiguration(string configName)
         {
-            IsRunning = true;
-            var productRegex = new Regex(Regex, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            IsRunning = false;
+            var config = DataAccess.DownloadConfiguration(configName);
+            if(config != null)
+            {
+                _configuration = config;
+            }
+        }
+
+        public void SaveConfiguration(CrawlerConfiguration config)
+        {
+            IsRunning = false;
+            _configuration = config;
+            if (!string.IsNullOrEmpty(_configuration.ConfigurationName))
+            {
+                DataAccess.SaveConfiguration(_configuration);
+            }
+        }
+
+        public void Run()
+        {
+            if(_configuration != null)
+            {
+                IsRunning = true;
+
+                RunCrawler();
+
+                switch(_configuration.ExtractionMethod)
+                {
+                    case ExtractionMethod.SCRAPPER:
+                        RunScraper();
+                        break;
+                    case ExtractionMethod.CURL:
+                        RunCURLRequester();
+                        break;
+                    case ExtractionMethod.ONLY_URL:
+                        DataAccess.SaveCrawlerResult(_configuration.SaveFolderName, _storedUrls);
+                        break;
+                }
+
+                IsRunning = false;
+            }
+        }
+
+        public void RunCrawler()
+        {
+            var productRegex = _configuration.ValidatorType.HasFlag(ValidatorType.REGEX) ? new Regex(Regex, RegexOptions.Compiled | RegexOptions.IgnoreCase) : null;
             var urlQueue = new Queue<string>();
             var urlsToSkip = new List<string>();
             urlQueue.Enqueue(StartingUrl);
 
-            while(urlQueue.TryDequeue(out var nextUrl) && IsRunning)
+            while (urlQueue.TryDequeue(out var nextUrl) && IsRunning)
             {
-                _edgeDriver.Navigate().GoToUrl(nextUrl);
-                urlsToSkip.Add(nextUrl);
-
-                var pageNodes = _edgeDriver.FindElements(By.XPath("//a"));
-                foreach (var node in pageNodes)
+                if(!urlsToSkip.Contains(nextUrl))
                 {
-                    try
+                    _edgeDriver.Navigate().GoToUrl(nextUrl);
+                    urlsToSkip.Add(nextUrl);
+
+                    var pageNodes = _edgeDriver.FindElements(By.XPath("//a"));
+                    foreach (var node in pageNodes)
                     {
-                        var newUrl = node.GetAttribute("href");
-                        if (newUrl != null)
+                        try
                         {
-                            if(newUrl.Contains(Domain))
+                            var newUrl = node.GetAttribute("href");
+                            if (newUrl != null)
                             {
-                                if (newUrl[0] == '/')
+                                if (newUrl.Contains(Domain))
                                 {
-                                    newUrl = Url + newUrl;
-                                }
-
-                                if (productRegex.IsMatch(newUrl))
-                                {
-                                    var product = GetProductFromNode(node, newUrl);
-                                    if (product != null)
+                                    if (newUrl[0] == '/')
                                     {
-                                        DataAccess.SaveProduct(product);
+                                        newUrl = Url + newUrl;
                                     }
-                                    urlsToSkip.Add(newUrl);
-                                }
 
-                                if (!urlsToSkip.Contains(newUrl))
-                                {
-                                    Logger.Log(Logger.LogLevel.INFO, $"Algorithm found: {newUrl}");
-                                    urlQueue.Enqueue(newUrl);
-                                    urlsToSkip.Add(newUrl);
+                                    switch (_configuration.ValidatorType)
+                                    {
+                                        case ValidatorType.REGEX:
+                                            {
+                                                if (productRegex != null && productRegex.IsMatch(newUrl))
+                                                {
+                                                    _storedUrls.Add(newUrl);
+                                                    urlsToSkip.Add(newUrl);
+                                                }
+                                                break;
+                                            }
+                                        case ValidatorType.XPATH:
+                                            {
+                                                break;
+                                            }
+                                        case ValidatorType.CSS_SELECTOR:
+                                            {
+                                                break;
+                                            }
+                                    }
+
+
+                                    if (!urlsToSkip.Contains(newUrl))
+                                    {
+                                        Logger.Log(Logger.LogLevel.INFO, $"Algorithm found: {newUrl}", _configuration.ConfigurationName);
+                                        urlQueue.Enqueue(newUrl);
+                                    }
                                 }
+                                urlsToSkip.Add(newUrl);
                             }
-                            urlsToSkip.Add(newUrl);
+                        }
+                        catch
+                        {
+
                         }
                     }
-                    catch
-                    {
-
-                    }
+                    Thread.Sleep(_delay);
                 }
-                Thread.Sleep(_delay);
             }
-            IsRunning = false;
         }
 
-        private static Product? GetProductFromNode(IWebElement htmlNode, string url)
+        public void RunScraper()
         {
-            if (!string.IsNullOrEmpty(url))
+            foreach(var url in _storedUrls)
             {
-                return new(string.Empty, url, string.Empty);
-            }
 
-            return null;
+            }
+        }
+
+        public void RunCURLRequester()
+        {
+            foreach(var url in _storedUrls)
+            {
+
+            }
         }
 
         public void AbortCurrentAction()

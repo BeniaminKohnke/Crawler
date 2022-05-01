@@ -69,7 +69,7 @@
             this.StartingAddressLabel = new System.Windows.Forms.Label();
             this.UrlLabel = new System.Windows.Forms.Label();
             this.StartingPageTextBox = new System.Windows.Forms.TextBox();
-            this.UrlRegexTextBox = new System.Windows.Forms.TextBox();
+            this.ValidatorTextBox = new System.Windows.Forms.TextBox();
             this.DomainTextBox = new System.Windows.Forms.TextBox();
             this.UrlTextBox = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -78,6 +78,8 @@
             this.FolderNameBox = new System.Windows.Forms.TextBox();
             this.FolderNameLabel = new System.Windows.Forms.Label();
             this.Update = new System.Windows.Forms.Timer(this.components);
+            this.ConfigNameBox = new System.Windows.Forms.TextBox();
+            this.ConfigNameLabel = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -152,7 +154,7 @@
             this.tabPage2.Controls.Add(this.StartingAddressLabel);
             this.tabPage2.Controls.Add(this.UrlLabel);
             this.tabPage2.Controls.Add(this.StartingPageTextBox);
-            this.tabPage2.Controls.Add(this.UrlRegexTextBox);
+            this.tabPage2.Controls.Add(this.ValidatorTextBox);
             this.tabPage2.Controls.Add(this.DomainTextBox);
             this.tabPage2.Controls.Add(this.UrlTextBox);
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
@@ -484,13 +486,13 @@
             this.StartingPageTextBox.TabIndex = 9;
             this.StartingPageTextBox.Text = "https://store.epicgames.com/pl/browse?sortBy=releaseDate&sortDir=DESC&count=40";
             // 
-            // UrlRegexTextBox
+            // ValidatorTextBox
             // 
-            this.UrlRegexTextBox.Location = new System.Drawing.Point(12, 118);
-            this.UrlRegexTextBox.Name = "UrlRegexTextBox";
-            this.UrlRegexTextBox.Size = new System.Drawing.Size(504, 23);
-            this.UrlRegexTextBox.TabIndex = 7;
-            this.UrlRegexTextBox.Text = "/p/[A-Z\\d-]+$";
+            this.ValidatorTextBox.Location = new System.Drawing.Point(12, 118);
+            this.ValidatorTextBox.Name = "ValidatorTextBox";
+            this.ValidatorTextBox.Size = new System.Drawing.Size(504, 23);
+            this.ValidatorTextBox.TabIndex = 7;
+            this.ValidatorTextBox.Text = "/p/[A-Z\\d-]+$";
             // 
             // DomainTextBox
             // 
@@ -510,6 +512,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.ConfigNameLabel);
+            this.tabPage3.Controls.Add(this.ConfigNameBox);
             this.tabPage3.Controls.Add(this.LoadConfigButton);
             this.tabPage3.Controls.Add(this.SaveConfigButton);
             this.tabPage3.Controls.Add(this.FolderNameBox);
@@ -524,21 +528,23 @@
             // 
             // LoadConfigButton
             // 
-            this.LoadConfigButton.Location = new System.Drawing.Point(93, 60);
+            this.LoadConfigButton.Location = new System.Drawing.Point(93, 104);
             this.LoadConfigButton.Name = "LoadConfigButton";
             this.LoadConfigButton.Size = new System.Drawing.Size(75, 23);
             this.LoadConfigButton.TabIndex = 3;
             this.LoadConfigButton.Text = "Load";
             this.LoadConfigButton.UseVisualStyleBackColor = true;
+            this.LoadConfigButton.Click += new System.EventHandler(this.LoadConfigButton_Click);
             // 
             // SaveConfigButton
             // 
-            this.SaveConfigButton.Location = new System.Drawing.Point(12, 60);
+            this.SaveConfigButton.Location = new System.Drawing.Point(12, 104);
             this.SaveConfigButton.Name = "SaveConfigButton";
             this.SaveConfigButton.Size = new System.Drawing.Size(75, 23);
             this.SaveConfigButton.TabIndex = 2;
             this.SaveConfigButton.Text = "Save";
             this.SaveConfigButton.UseVisualStyleBackColor = true;
+            this.SaveConfigButton.Click += new System.EventHandler(this.SaveConfigButton_Click);
             // 
             // FolderNameBox
             // 
@@ -560,6 +566,22 @@
             // 
             this.Update.Enabled = true;
             this.Update.Tick += new System.EventHandler(this.Update_Tick);
+            // 
+            // ConfigNameBox
+            // 
+            this.ConfigNameBox.Location = new System.Drawing.Point(12, 75);
+            this.ConfigNameBox.Name = "ConfigNameBox";
+            this.ConfigNameBox.Size = new System.Drawing.Size(510, 23);
+            this.ConfigNameBox.TabIndex = 4;
+            // 
+            // ConfigNameLabel
+            // 
+            this.ConfigNameLabel.AutoSize = true;
+            this.ConfigNameLabel.Location = new System.Drawing.Point(12, 57);
+            this.ConfigNameLabel.Name = "ConfigNameLabel";
+            this.ConfigNameLabel.Size = new System.Drawing.Size(114, 15);
+            this.ConfigNameLabel.TabIndex = 5;
+            this.ConfigNameLabel.Text = "Configuration name";
             // 
             // GUI
             // 
@@ -592,7 +614,7 @@
         private TabPage tabPage1;
         private ListBox LogBox;
         private TabPage tabPage2;
-        private TextBox UrlRegexTextBox;
+        private TextBox ValidatorTextBox;
         private TextBox DomainTextBox;
         private TextBox UrlTextBox;
         private TabPage tabPage3;
@@ -635,5 +657,7 @@
         private Button SaveConfigButton;
         private TextBox FolderNameBox;
         private Label FolderNameLabel;
+        private Label ConfigNameLabel;
+        private TextBox ConfigNameBox;
     }
 }

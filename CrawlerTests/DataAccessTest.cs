@@ -7,23 +7,17 @@ namespace CrawlerTests
     public class DataAccessTest
     {
         [TestMethod]
-        public void DownloadFileTest()
-        {
-            //DataAccess.DownloadFile();
-        }
-
-        [TestMethod]
         public void ConfigurationTest()
         {
-            DataAccess.DownloadConfiguration();
+            DataAccess.DownloadConfiguration("TEST");
         }
 
         [TestMethod]
         public void SaveProductTest()
         {
-            var product = new Product("AAAA", "AAAA", "SSSS");
+            var product = new Product("TEST", "TEST@TEST.TEST", "TEST");
 
-            DataAccess.SaveProduct(product);
+            DataAccess.SaveProduct("TEST", product);
         }
     }
 }

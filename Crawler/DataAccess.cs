@@ -1,76 +1,81 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
-using Google.Apis.Drive.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Text;
 
 namespace Crawler
 {
     public static class DataAccess
     {
-        public static string s_currentFileId { get; set; } = string.Empty;
-        #region Google
-        private readonly static DriveService s_driveService = GetDriveService();
-        private readonly static string s_crawlerFileId = GetFileId("DOTNETCRAWLER");
-        private readonly static Dictionary<string, string> s_filesWithIds = GetFilesNamesWithIds();
-        private static List<string?>? s_configurationList;
-
-        private static DriveService GetDriveService()
+        private readonly static DriveService s_driveService;
+        private readonly static string s_crawlerFolderId;
+        private readonly static string s_configurationsFolderId;
+        private readonly static string s_dataFolderId;
+        private readonly static string s_logFolderId;
+        private static Dictionary<string, string> s_dataFoldersWithIds = new();
+        private static Dictionary<string, string> s_configurationsWithIds = new();
+        static DataAccess()
         {
-            using var stream = new FileStream("client_secret_720612502335-vg4d9fnsp15cbp0kslmh2v0j0u5kh183.apps.googleusercontent.com.json", FileMode.Open, FileAccess.Read);
-            var credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                GoogleClientSecrets.FromStream(stream).Secrets,
-                new string[] { DriveService.Scope.Drive },
-                "owner",
-                CancellationToken.None,
-                new FileDataStore("token.json", true)).Result;
-
-            var service = new DriveService(new BaseClientService.Initializer()
             {
-                HttpClientInitializer = credential,
-                ApplicationName = "DOTNETCRAWLER",
-            });
+                using var stream = new FileStream("client_secret_696258282970-8kojf5poljetis51caidvaheh4pj7kvi.apps.googleusercontent.com.json", FileMode.Open, FileAccess.Read);
+                var credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    GoogleClientSecrets.FromStream(stream).Secrets,
+                    new string[] { DriveService.Scope.Drive },
+                    "owner",
+                    CancellationToken.None,
+                    new FileDataStore("token.json", true)).Result;
 
-            return service;
-        }
-
-        public static void DownloadConfiguration()
-        {
-            var fileId = GetFileId("Configuration.json");
-            var file = DownloadFile(fileId);
-
-            try
-            {
-                var jo = JObject.Parse(file);
-
-                var token = jo.SelectToken("$.Files");
-                if (token != null)
+                s_driveService = new DriveService(new BaseClientService.Initializer()
                 {
-                    s_configurationList = token.Values<string>().ToList();
-                }
+                    HttpClientInitializer = credential,
+                    ApplicationName = "DOTNETCRAWLER",
+                });
             }
-            catch (JsonReaderException e)
-            {
 
+            {
+                var listRequest = s_driveService.Files.List();
+                listRequest.Fields = "nextPageToken, files(id)";
+
+                listRequest.Q = $"name = 'DOTNETCRAWLER'";
+                s_crawlerFolderId = listRequest.Execute().Files.First().Id;
+
+                listRequest.Q = $"name = 'CONFIG' and '{s_crawlerFolderId}' in parents";
+                s_configurationsFolderId = listRequest.Execute().Files.First().Id;
+
+                listRequest.Q = $"name = 'DATA' and '{s_crawlerFolderId}' in parents";
+                s_dataFolderId = listRequest.Execute().Files.First().Id;
+
+                listRequest.Q = $"name = 'LOG' and '{s_crawlerFolderId}' in parents";
+                s_logFolderId = listRequest.Execute().Files.First().Id;
             }
+
+            UpdateConfigurationFiles();
+            UpdateDataFolders();
         }
 
-        public static string GetFileId(string fileName)
+        private static void UpdateConfigurationFiles()
         {
             var listRequest = s_driveService.Files.List();
-
-            listRequest.Fields = "nextPageToken, files(name, id)";
-            listRequest.Q = string.IsNullOrEmpty(s_crawlerFileId) ? $"name = '{fileName}'" : $"name = '{fileName}' and '{s_crawlerFileId}' in parents";
-
-            return listRequest.Execute().Files.First().Id;
+            listRequest.Q = $"'{s_configurationsFolderId}' in parents";
+            listRequest.Fields = "nextPageToken, files(id, name)";
+            var response = listRequest.Execute().Files;
+            s_configurationsWithIds = response.ToDictionary(k => k.Name, v => v.Id);
         }
 
-        public static Dictionary<string, string> GetFilesNamesWithIds(string folderName = "")
+        private static void UpdateDataFolders()
         {
-            var folderId = string.IsNullOrEmpty(folderName) ? s_crawlerFileId : GetFileId(folderName);
+            var listRequest = s_driveService.Files.List();
+            listRequest.Q = $"'{s_dataFolderId}' in parents";
+            listRequest.Fields = "nextPageToken, files(id, name)";
+            var response = listRequest.Execute().Files;
+            s_dataFoldersWithIds = response.ToDictionary(k => k.Name, v => v.Id);
+        }
+
+        public static Dictionary<string, string> GetProductsFilesNamesWithIds(string folderName = "")
+        {
+            var folderId = s_dataFoldersWithIds[folderName];
             var listRequest = s_driveService.Files.List();
 
             listRequest.Q = $"'{folderId}' in parents";
@@ -80,44 +85,65 @@ namespace Crawler
             return response.ToDictionary(k => k.Name, v => v.Id);
         }
 
-        public static Dictionary<string, string> DownloadFiles(string folderName = "")
+        public static CrawlerConfiguration? DownloadConfiguration(string configName)
         {
-            var folderId = string.IsNullOrEmpty(folderName) ? s_crawlerFileId : GetFileId(folderName);
-            var listRequest = s_driveService.Files.List();
-
-            listRequest.Q = $"'{folderId}' in parents and name = 'ConfigurationFile'";
-            listRequest.Fields = "nextPageToken, files(id, name)";
-            var files = listRequest.Execute().Files;
-
-            var filesContent = new Dictionary<string, string>();
-            foreach (var file in files)
+            if(s_configurationsFolderId.Contains($"{configName}.json"))
             {
-                var getRequest = s_driveService.Files.Get(file.Id);
+                var getRequest = s_driveService.Files.Get(configName);
                 var fileContent = new MemoryStream();
                 getRequest.DownloadWithStatus(fileContent);
-                filesContent.Add(file.Name, Encoding.UTF8.GetString(fileContent.ToArray()));
+                var file = Encoding.UTF8.GetString(fileContent.ToArray());
+
+                try
+                {
+                    var config = JsonConvert.DeserializeObject<CrawlerConfiguration>(file);
+                    return config;
+                }
+                catch (Exception e)
+                {
+                    Logger.Log(Logger.LogLevel.ERROR, "Exception while deserializing configuration file", "DATA_ACCESS", e);
+                }
             }
 
-            return filesContent;
+            return null;
         }
 
-        public static string DownloadFile(string fileId)
+        public static void SaveConfiguration(CrawlerConfiguration config)
         {
-            var getRequest = s_driveService.Files.Get(fileId);
-            var fileContent = new MemoryStream();
-            getRequest.DownloadWithStatus(fileContent);
-
-            return Encoding.UTF8.GetString(fileContent.ToArray());
-        }
-        #endregion
-
-        public static void SaveProduct(Product product)
-        {
-            if(s_filesWithIds.ContainsKey(product.Sku + ".json"))
+            if (s_configurationsWithIds.ContainsKey(config.ConfigurationName + ".json"))
             {
-                //s_filesWithIds[product.Sku]
+                var deleteRequest = s_driveService.Files.Delete(s_dataFoldersWithIds[config.ConfigurationName + ".json"]);
+                deleteRequest.Execute();
+            }
 
-                var deleteRequest = s_driveService.Files.Delete(s_filesWithIds[product.Sku + ".json"]);
+            var fileData = new Google.Apis.Drive.v3.Data.File
+            {
+                Name = $"{config.ConfigurationName}.json",
+                Parents = new List<string>
+                {
+                    s_crawlerFolderId,
+                    s_configurationsFolderId,
+                },
+                MimeType = "application/json",
+            };
+
+            var serializedProduct = JsonConvert.SerializeObject(config);
+            using var fileContent = new MemoryStream(Encoding.UTF8.GetBytes(serializedProduct));
+            var createRequest = s_driveService.Files.Create(fileData, fileContent, fileData.MimeType);
+            createRequest.Fields = "id";
+            createRequest.Upload();
+        }
+
+        public static void SaveCrawlerResult(string folderName, List<string> urls)
+        {
+
+        }
+
+        public static void SaveProduct(string folderName, Product product)
+        {
+            if(s_dataFoldersWithIds.ContainsKey(product.Sku + ".json"))
+            {
+                var deleteRequest = s_driveService.Files.Delete(s_dataFoldersWithIds[product.Sku + ".json"]);
                 deleteRequest.Execute();
             }
 
@@ -126,24 +152,48 @@ namespace Crawler
                 Name = $"{product.Sku}.json",
                 Parents = new List<string>
                 {
-                    s_crawlerFileId,
-                    //s_currentFileId
+                    s_crawlerFolderId,
+                    s_dataFolderId,
+                    s_dataFoldersWithIds[folderName],
                 },
-                MimeType = "application/json", //"application/json"
+                MimeType = "application/json",
             };
 
             var serializedProduct = JsonConvert.SerializeObject(product);
-            using(var fileContent = new MemoryStream(Encoding.UTF8.GetBytes(serializedProduct)))
-            {
-                var createRequest = s_driveService.Files.Create(fileData, fileContent, fileData.MimeType);
-                createRequest.Fields = "id";
-                var x = createRequest.Upload();
-            }
+            using var fileContent = new MemoryStream(Encoding.UTF8.GetBytes(serializedProduct));
+            var createRequest = s_driveService.Files.Create(fileData, fileContent, fileData.MimeType);
+            createRequest.Fields = "id";
+            createRequest.Upload();
         }
 
-        public static void SaveLog(Logger.LogLevel level, string message, string memberName)
+        public static void SaveLog(Logger.LogLevel level, string message, string configName, string memberName, Exception? e = null)
         {
+            var logObject = new Logger.LogObject
+            {
+                Level = level,
+                Message = message,
+                CallerName = memberName,
+                ConfigName = configName,
+                InternalException = e,
+                LogDate = DateTime.Now,
+            };
 
+            var fileData = new Google.Apis.Drive.v3.Data.File
+            {
+                Name = $"{logObject.LogDate}.json",
+                Parents = new List<string>
+                {
+                    s_crawlerFolderId,
+                    s_logFolderId,
+                },
+                MimeType = "application/json",
+            };
+
+            var serializedProduct = JsonConvert.SerializeObject(logObject);
+            using var fileContent = new MemoryStream(Encoding.UTF8.GetBytes(serializedProduct));
+            var createRequest = s_driveService.Files.Create(fileData, fileContent, fileData.MimeType);
+            createRequest.Fields = "id";
+            createRequest.Upload();
         }
     }
 }
