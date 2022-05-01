@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "PfOKIdTi3qYKNISkyKuTMaeUtppAfX3NMkIqel2ZyCS5yP+9e2vbHIiv7y/UVmVRC8bYMGr4EHbny0cUTEI1+A==",
+  "dgSpecHash": "oxreF6vo4eddSorTpNF7ZEc/B6KFiUM+iLeBl/lyXJYiP3d6/Fmb65coRg4WDVMQp+95ESAe/Sk/myhwDwe+hw==",
   "success": true,
   "projectFilePath": "C:\\Users\\benia\\Documents\\GitHub\\DOTNETCRAWLER\\CrawlerTests\\CrawlerTests.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "C:\\Users\\benia\\.nuget\\packages\\google.apis.auth\\1.57.0\\google.apis.auth.1.57.0.nupkg.sha512",
     "C:\\Users\\benia\\.nuget\\packages\\google.apis.core\\1.57.0\\google.apis.core.1.57.0.nupkg.sha512",
     "C:\\Users\\benia\\.nuget\\packages\\google.apis.drive.v3\\1.57.0.2663\\google.apis.drive.v3.1.57.0.2663.nupkg.sha512",
+    "C:\\Users\\benia\\.nuget\\packages\\htmlagilitypack\\1.11.42\\htmlagilitypack.1.11.42.nupkg.sha512",
     "C:\\Users\\benia\\.nuget\\packages\\microsoft.codecoverage\\16.11.0\\microsoft.codecoverage.16.11.0.nupkg.sha512",
     "C:\\Users\\benia\\.nuget\\packages\\microsoft.net.test.sdk\\16.11.0\\microsoft.net.test.sdk.16.11.0.nupkg.sha512",
     "C:\\Users\\benia\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
