@@ -87,9 +87,9 @@ namespace Crawler
 
         public static CrawlerConfiguration? DownloadConfiguration(string configName)
         {
-            if(s_configurationsFolderId.Contains($"{configName}.json"))
+            if(s_configurationsWithIds.ContainsKey($"{configName}.json"))
             {
-                var getRequest = s_driveService.Files.Get(configName);
+                var getRequest = s_driveService.Files.Get(s_configurationsWithIds[$"{configName}.json"]);
                 var fileContent = new MemoryStream();
                 getRequest.DownloadWithStatus(fileContent);
                 var file = Encoding.UTF8.GetString(fileContent.ToArray());
@@ -112,7 +112,7 @@ namespace Crawler
         {
             if (s_configurationsWithIds.ContainsKey(config.ConfigurationName + ".json"))
             {
-                var deleteRequest = s_driveService.Files.Delete(s_dataFoldersWithIds[config.ConfigurationName + ".json"]);
+                var deleteRequest = s_driveService.Files.Delete(s_configurationsWithIds[config.ConfigurationName + ".json"]);
                 deleteRequest.Execute();
             }
 
@@ -121,14 +121,13 @@ namespace Crawler
                 Name = $"{config.ConfigurationName}.json",
                 Parents = new List<string>
                 {
-                    s_crawlerFolderId,
                     s_configurationsFolderId,
                 },
                 MimeType = "application/json",
             };
 
-            var serializedProduct = JsonConvert.SerializeObject(config);
-            using var fileContent = new MemoryStream(Encoding.UTF8.GetBytes(serializedProduct));
+            var serializedConfig = JsonConvert.SerializeObject(config, Formatting.Indented);
+            using var fileContent = new MemoryStream(Encoding.UTF8.GetBytes(serializedConfig));
             var createRequest = s_driveService.Files.Create(fileData, fileContent, fileData.MimeType);
             createRequest.Fields = "id";
             createRequest.Upload();
@@ -152,14 +151,12 @@ namespace Crawler
                 Name = $"{product.Sku}.json",
                 Parents = new List<string>
                 {
-                    s_crawlerFolderId,
-                    s_dataFolderId,
                     s_dataFoldersWithIds[folderName],
                 },
                 MimeType = "application/json",
             };
 
-            var serializedProduct = JsonConvert.SerializeObject(product);
+            var serializedProduct = JsonConvert.SerializeObject(product, Formatting.Indented);
             using var fileContent = new MemoryStream(Encoding.UTF8.GetBytes(serializedProduct));
             var createRequest = s_driveService.Files.Create(fileData, fileContent, fileData.MimeType);
             createRequest.Fields = "id";
@@ -183,7 +180,6 @@ namespace Crawler
                 Name = $"{logObject.LogDate}.json",
                 Parents = new List<string>
                 {
-                    s_crawlerFolderId,
                     s_logFolderId,
                 },
                 MimeType = "application/json",
@@ -195,5 +191,7 @@ namespace Crawler
             createRequest.Fields = "id";
             createRequest.Upload();
         }
+
+        public static string[] GetConfigurations() => s_configurationsWithIds.Select(c => c.Key.Replace(".json", string.Empty)).ToArray();
     }
 }

@@ -25,3 +25,4 @@ C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\Plat-dot-NET-33INF-SSI-SP-A_PROJEK
 C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\Plat-dot-NET-33INF-SSI-SP-A_PROJEKT_Karol_Jońca_Beniamin_Kohnke\obj\Debug\net6.0-windows\CrawlerGUI.pdb
 C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\Plat-dot-NET-33INF-SSI-SP-A_PROJEKT_Karol_Jońca_Beniamin_Kohnke\obj\Debug\net6.0-windows\CrawlerGUI.genruntimeconfig.cache
 C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\Plat-dot-NET-33INF-SSI-SP-A_PROJEKT_Karol_Jońca_Beniamin_Kohnke\obj\Debug\net6.0-windows\ref\CrawlerGUI.dll
+C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\Plat-dot-NET-33INF-SSI-SP-A_PROJEKT_Karol_Jońca_Beniamin_Kohnke\bin\Debug\net6.0-windows\HtmlAgilityPack.dll

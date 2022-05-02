@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "oxreF6vo4eddSorTpNF7ZEc/B6KFiUM+iLeBl/lyXJYiP3d6/Fmb65coRg4WDVMQp+95ESAe/Sk/myhwDwe+hw==",
+  "dgSpecHash": "ybsQz78D8qU8mmTbHmKhnKrffEUDStrBnKfbeNzBwZlOZEL28nSxay0VcBRTUG9r2SDD0mN6oHfS/xtK2eL52Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\benia\\Documents\\GitHub\\DOTNETCRAWLER\\CrawlerTests\\CrawlerTests.csproj",
   "expectedPackageFiles": [
@@ -38,8 +38,7 @@
     "C:\\Users\\benia\\.nuget\\packages\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\benia\\.nuget\\packages\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\benia\\.nuget\\packages\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
-    "C:\\Users\\benia\\.nuget\\packages\\selenium.webdriver\\4.1.0\\selenium.webdriver.4.1.0.nupkg.sha512",
-    "C:\\Users\\benia\\.nuget\\packages\\selenium.webdriver.msedgedriver\\100.0.1185.36\\selenium.webdriver.msedgedriver.100.0.1185.36.nupkg.sha512",
+    "C:\\Users\\benia\\.nuget\\packages\\selenium.webdriver\\4.1.1\\selenium.webdriver.4.1.1.nupkg.sha512",
     "C:\\Users\\benia\\.nuget\\packages\\system.appcontext\\4.3.0\\system.appcontext.4.3.0.nupkg.sha512",
     "C:\\Users\\benia\\.nuget\\packages\\system.buffers\\4.3.0\\system.buffers.4.3.0.nupkg.sha512",
     "C:\\Users\\benia\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
