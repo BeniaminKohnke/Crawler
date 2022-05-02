@@ -1,5 +1,5 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Chrome;
 using System.Text.RegularExpressions;
 
 namespace Crawler
@@ -9,7 +9,7 @@ namespace Crawler
         private readonly TimeSpan _delay = new(0, 0, 1);
         private readonly List<string> _storedUrls = new();
 
-        private readonly IWebDriver _edgeDriver = new EdgeDriver();
+        private readonly IWebDriver _webDriver = new ChromeDriver();
 
         private CrawlerConfiguration _configuration = new();
 
@@ -22,11 +22,11 @@ namespace Crawler
 
         ~Algorithm()
         {
-            _edgeDriver.Close();
-            _edgeDriver.Quit();
+            _webDriver.Close();
+            _webDriver.Quit();
         }
 
-        public void LoadConfiguration(string configName)
+        public CrawlerConfiguration? LoadConfiguration(string configName)
         {
             IsRunning = false;
             var config = DataAccess.DownloadConfiguration(configName);
@@ -34,6 +34,7 @@ namespace Crawler
             {
                 _configuration = config;
             }
+            return config;
         }
 
         public void SaveConfiguration(CrawlerConfiguration config)
@@ -56,13 +57,13 @@ namespace Crawler
 
                 switch(_configuration.ExtractionMethod)
                 {
-                    case ExtractionMethod.SCRAPPER:
+                    case CrawlerConfigurationMethods.ExtractionMethod.SCRAPPER:
                         RunScraper();
                         break;
-                    case ExtractionMethod.CURL:
+                    case CrawlerConfigurationMethods.ExtractionMethod.CURL:
                         RunCURLRequester();
                         break;
-                    case ExtractionMethod.ONLY_URL:
+                    case CrawlerConfigurationMethods.ExtractionMethod.ONLY_URL:
                         DataAccess.SaveCrawlerResult(_configuration.SaveFolderName, _storedUrls);
                         break;
                 }
@@ -73,7 +74,7 @@ namespace Crawler
 
         public void RunCrawler()
         {
-            var productRegex = _configuration.ValidatorType.HasFlag(ValidatorType.REGEX) ? new Regex(Regex, RegexOptions.Compiled | RegexOptions.IgnoreCase) : null;
+            var productRegex = _configuration.ValidatorType.HasFlag(CrawlerConfigurationMethods.ValidatorType.REGEX) ? new Regex(Regex, RegexOptions.Compiled | RegexOptions.IgnoreCase) : null;
             var urlQueue = new Queue<string>();
             var urlsToSkip = new List<string>();
             urlQueue.Enqueue(StartingUrl);
@@ -82,10 +83,10 @@ namespace Crawler
             {
                 if(!urlsToSkip.Contains(nextUrl))
                 {
-                    _edgeDriver.Navigate().GoToUrl(nextUrl);
+                    _webDriver.Navigate().GoToUrl(nextUrl);
                     urlsToSkip.Add(nextUrl);
 
-                    var pageNodes = _edgeDriver.FindElements(By.XPath("//a"));
+                    var pageNodes = _webDriver.FindElements(By.XPath("//a"));
                     foreach (var node in pageNodes)
                     {
                         try
@@ -102,7 +103,7 @@ namespace Crawler
 
                                     switch (_configuration.ValidatorType)
                                     {
-                                        case ValidatorType.REGEX:
+                                        case CrawlerConfigurationMethods.ValidatorType.REGEX:
                                             {
                                                 if (productRegex != null && productRegex.IsMatch(newUrl))
                                                 {
@@ -111,11 +112,11 @@ namespace Crawler
                                                 }
                                                 break;
                                             }
-                                        case ValidatorType.XPATH:
+                                        case CrawlerConfigurationMethods.ValidatorType.XPATH:
                                             {
                                                 break;
                                             }
-                                        case ValidatorType.CSS_SELECTOR:
+                                        case CrawlerConfigurationMethods.ValidatorType.CSS_SELECTOR:
                                             {
                                                 break;
                                             }
@@ -128,7 +129,6 @@ namespace Crawler
                                         urlQueue.Enqueue(newUrl);
                                     }
                                 }
-                                urlsToSkip.Add(newUrl);
                             }
                         }
                         catch

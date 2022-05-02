@@ -9,6 +9,7 @@ namespace CrawlerGUI
         public GUI()
         {
             InitializeComponent();
+            ExistingConfigsBox.Items.AddRange(DataAccess.GetConfigurations());
         }
 
         private void StartButton_Click(object sender, EventArgs e)
@@ -47,8 +48,8 @@ namespace CrawlerGUI
                 DomainText = DomainTextBox.Text,
                 StartingAddress = StartingPageTextBox.Text,
                 Validator = ValidatorTextBox.Text,
-                ValidatorType = GetValidatorType(ValidatorTextBox.Text),
-                ExtractionMethod = GetExtractionMethod(ExtractionMethodBox.Text),
+                ValidatorType = CrawlerConfigurationMethods.GetValidatorType(ValidatorTypeBox.Text),
+                ExtractionMethod = CrawlerConfigurationMethods.GetExtractionMethod(ExtractionMethodBox.Text),
                 NameXPath = NameXPathBox.Text,
                 CurrentPriceXPath = CurrentPriceXPathBox.Text,
                 PreviousPriceXPath = PreviousPriceXPathBox.Text,
@@ -59,7 +60,7 @@ namespace CrawlerGUI
                 SkuJSONPath = SkuJPathBox.Text,
                 RequestHeaders = HeadersBox.Text,
                 RequestData = DataBox.Text,
-                RequesMethod = GetRequesMethod(CURLMethodBox.Text),
+                RequesMethod = CrawlerConfigurationMethods.GetRequesMethod(CURLMethodBox.Text),
             };
 
             _algorithm.SaveConfiguration(config);
@@ -67,39 +68,35 @@ namespace CrawlerGUI
 
         private void LoadConfigButton_Click(object sender, EventArgs e)
         {
-            _algorithm.LoadConfiguration(ConfigNameBox.Text);
+            var config = _algorithm.LoadConfiguration(ExistingConfigsBox.Text);
+            if(config != null)
+            {
+                FolderNameBox.Text = config.SaveFolderName;
+                ConfigNameBox.Text = config.ConfigurationName;
+                UrlTextBox.Text = config.PageAddress;
+                DomainTextBox.Text = config.DomainText;
+                StartingPageTextBox.Text = config.StartingAddress;
+                ValidatorTextBox.Text = config.Validator;
+                ValidatorTypeBox.Text = CrawlerConfigurationMethods.GetValidatorName(config.ValidatorType);
+                ExtractionMethodBox.Text = CrawlerConfigurationMethods.GetExtractionMethodName(config.ExtractionMethod);
+                NameXPathBox.Text = config.NameXPath;
+                CurrentPriceXPathBox.Text = config.CurrentPriceXPath;
+                PreviousPriceXPathBox.Text = config.PreviousPriceXPath;
+                SkuXPathBox.Text = config.SkuXPath;
+                NameJPathBox.Text = config.NameJSONPath;
+                CurrentPriceJPathBox.Text = config.CurrentJSONPath;
+                PreviousPriceJPathBox.Text = config.PreviousJSONPath;
+                SkuJPathBox.Text = config.SkuJSONPath;
+                HeadersBox.Text = config.RequestHeaders;
+                DataBox.Text = config.RequestData;
+                CURLMethodBox.Text = CrawlerConfigurationMethods.GetRequesMethodName(config.RequesMethod);
+            }
         }
 
-        public static ValidatorType GetValidatorType(string text)
+        private void RefreshButton_Click(object sender, EventArgs e)
         {
-            return text switch
-            {
-                "REGEX" => ValidatorType.REGEX,
-                "CSS_SELECTOR" => ValidatorType.CSS_SELECTOR,
-                "XPATH" => ValidatorType.XPATH,
-                _ => ValidatorType.NONE,
-            };
-        }
-
-        public static ExtractionMethod GetExtractionMethod(string text)
-        {
-            return text switch
-            {
-                "CURL" => ExtractionMethod.CURL,
-                "SCRAPPER" => ExtractionMethod.SCRAPPER,
-                "ONLY_URL" => ExtractionMethod.ONLY_URL,
-                _ => ExtractionMethod.NONE,
-            };
-        }
-
-        public static RequesMethod GetRequesMethod(string text)
-        {
-            return text switch
-            {
-                "GET" => RequesMethod.GET,
-                "POST" => RequesMethod.POST,
-                _ => RequesMethod.NONE,
-            };
+            ExistingConfigsBox.Items.Clear();
+            ExistingConfigsBox.Items.AddRange(DataAccess.GetConfigurations());
         }
     }
 }

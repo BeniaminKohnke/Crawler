@@ -72,7 +72,7 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
-      "Selenium.WebDriver/4.1.0": {
+      "Selenium.WebDriver/4.1.1": {
         "type": "package",
         "dependencies": {
           "Newtonsoft.Json": "12.0.3"
@@ -84,12 +84,6 @@
           "lib/net5.0/WebDriver.dll": {}
         }
       },
-      "Selenium.WebDriver.MSEdgeDriver/100.0.1185.36": {
-        "type": "package",
-        "build": {
-          "build/_._": {}
-        }
-      },
       "Crawler/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -97,8 +91,7 @@
           "Google.Apis.Drive.v3": "1.57.0.2663",
           "HtmlAgilityPack": "1.11.42",
           "Newtonsoft.Json": "13.0.1",
-          "Selenium.WebDriver": "4.1.0",
-          "Selenium.WebDriver.MSEdgeDriver": "100.0.1185.36"
+          "Selenium.WebDriver": "4.1.1"
         },
         "compile": {
           "bin/placeholder/Crawler.dll": {}
@@ -287,10 +280,10 @@
         "packageIcon.png"
       ]
     },
-    "Selenium.WebDriver/4.1.0": {
-      "sha512": "d4smisz4a/wJCM2TzkKTl+BLfvZUTvaobhKElDfCVZlvY8ThsC8VAoBNWTlg1H/GGzIP//yVGko/W0FILTgkYA==",
+    "Selenium.WebDriver/4.1.1": {
+      "sha512": "lUPsSZMoIcDxB5tlppSPUUTMsaZovuUv/rXyYlroM0L3kl32cedOWbZ4m/hbJe9f24JlOqkPG8GX4gS35S+vSw==",
       "type": "package",
-      "path": "selenium.webdriver/4.1.0",
+      "path": "selenium.webdriver/4.1.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -302,26 +295,8 @@
         "lib/net5.0/WebDriver.dll",
         "lib/netstandard2.0/WebDriver.dll",
         "lib/netstandard2.1/WebDriver.dll",
-        "selenium.webdriver.4.1.0.nupkg.sha512",
+        "selenium.webdriver.4.1.1.nupkg.sha512",
         "selenium.webdriver.nuspec"
-      ]
-    },
-    "Selenium.WebDriver.MSEdgeDriver/100.0.1185.36": {
-      "sha512": "tQfNKwSrwnJ63DFB8SoZOUg/ZxAdB/xnBWnmojJhEyyGAx5W82ktuFvPrr9vSzzz3TOswg8pfwmBRIKEviBs+w==",
-      "type": "package",
-      "path": "selenium.webdriver.msedgedriver/100.0.1185.36",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "build/DefinePropertiesMSEdgeDriver.targets",
-        "build/Selenium.WebDriver.MSEdgeDriver.targets",
-        "driver/linux64/msedgedriver",
-        "driver/mac64/msedgedriver",
-        "driver/win32/msedgedriver.exe",
-        "driver/win64/msedgedriver.exe",
-        "license/license.txt",
-        "selenium.webdriver.msedgedriver.100.0.1185.36.nupkg.sha512",
-        "selenium.webdriver.msedgedriver.nuspec"
       ]
     },
     "Crawler/1.0.0": {

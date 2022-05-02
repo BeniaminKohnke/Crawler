@@ -63,7 +63,7 @@
             this.CurrentPriceJPathLabel = new System.Windows.Forms.Label();
             this.NameJPathLabel = new System.Windows.Forms.Label();
             this.TypeLabel = new System.Windows.Forms.Label();
-            this.VerificatorBox = new System.Windows.Forms.ComboBox();
+            this.ValidatorTypeBox = new System.Windows.Forms.ComboBox();
             this.VerificatorLabel = new System.Windows.Forms.Label();
             this.DomainLabel = new System.Windows.Forms.Label();
             this.StartingAddressLabel = new System.Windows.Forms.Label();
@@ -73,13 +73,15 @@
             this.DomainTextBox = new System.Windows.Forms.TextBox();
             this.UrlTextBox = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.ExistingConfigsBox = new System.Windows.Forms.ListBox();
+            this.ConfigNameLabel = new System.Windows.Forms.Label();
+            this.ConfigNameBox = new System.Windows.Forms.TextBox();
             this.LoadConfigButton = new System.Windows.Forms.Button();
             this.SaveConfigButton = new System.Windows.Forms.Button();
             this.FolderNameBox = new System.Windows.Forms.TextBox();
             this.FolderNameLabel = new System.Windows.Forms.Label();
             this.Update = new System.Windows.Forms.Timer(this.components);
-            this.ConfigNameBox = new System.Windows.Forms.TextBox();
-            this.ConfigNameLabel = new System.Windows.Forms.Label();
+            this.RefreshButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -148,7 +150,7 @@
             this.tabPage2.Controls.Add(this.MethodLabel);
             this.tabPage2.Controls.Add(this.tabControl2);
             this.tabPage2.Controls.Add(this.TypeLabel);
-            this.tabPage2.Controls.Add(this.VerificatorBox);
+            this.tabPage2.Controls.Add(this.ValidatorTypeBox);
             this.tabPage2.Controls.Add(this.VerificatorLabel);
             this.tabPage2.Controls.Add(this.DomainLabel);
             this.tabPage2.Controls.Add(this.StartingAddressLabel);
@@ -170,9 +172,9 @@
             this.ExtractionMethodBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ExtractionMethodBox.FormattingEnabled = true;
             this.ExtractionMethodBox.Items.AddRange(new object[] {
-            "Data scraper",
-            "Client URL request",
-            "Only Crawler"});
+            "DATA SCRAPER",
+            "CLIENT URL REQUEST",
+            "ONLY CRAWLER"});
             this.ExtractionMethodBox.Location = new System.Drawing.Point(12, 162);
             this.ExtractionMethodBox.Name = "ExtractionMethodBox";
             this.ExtractionMethodBox.Size = new System.Drawing.Size(504, 23);
@@ -429,18 +431,18 @@
             this.TypeLabel.TabIndex = 15;
             this.TypeLabel.Text = "Type";
             // 
-            // VerificatorBox
+            // ValidatorTypeBox
             // 
-            this.VerificatorBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.VerificatorBox.FormattingEnabled = true;
-            this.VerificatorBox.Items.AddRange(new object[] {
+            this.ValidatorTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ValidatorTypeBox.FormattingEnabled = true;
+            this.ValidatorTypeBox.Items.AddRange(new object[] {
             "REGEX",
             "CSS SELECTOR",
             "XPATH"});
-            this.VerificatorBox.Location = new System.Drawing.Point(521, 118);
-            this.VerificatorBox.Name = "VerificatorBox";
-            this.VerificatorBox.Size = new System.Drawing.Size(100, 23);
-            this.VerificatorBox.TabIndex = 14;
+            this.ValidatorTypeBox.Location = new System.Drawing.Point(521, 118);
+            this.ValidatorTypeBox.Name = "ValidatorTypeBox";
+            this.ValidatorTypeBox.Size = new System.Drawing.Size(100, 23);
+            this.ValidatorTypeBox.TabIndex = 14;
             // 
             // VerificatorLabel
             // 
@@ -484,7 +486,6 @@
             this.StartingPageTextBox.Name = "StartingPageTextBox";
             this.StartingPageTextBox.Size = new System.Drawing.Size(504, 23);
             this.StartingPageTextBox.TabIndex = 9;
-            this.StartingPageTextBox.Text = "https://store.epicgames.com/pl/browse?sortBy=releaseDate&sortDir=DESC&count=40";
             // 
             // ValidatorTextBox
             // 
@@ -492,7 +493,6 @@
             this.ValidatorTextBox.Name = "ValidatorTextBox";
             this.ValidatorTextBox.Size = new System.Drawing.Size(504, 23);
             this.ValidatorTextBox.TabIndex = 7;
-            this.ValidatorTextBox.Text = "/p/[A-Z\\d-]+$";
             // 
             // DomainTextBox
             // 
@@ -500,7 +500,6 @@
             this.DomainTextBox.Name = "DomainTextBox";
             this.DomainTextBox.Size = new System.Drawing.Size(100, 23);
             this.DomainTextBox.TabIndex = 8;
-            this.DomainTextBox.Text = "/pl/";
             // 
             // UrlTextBox
             // 
@@ -508,10 +507,11 @@
             this.UrlTextBox.Name = "UrlTextBox";
             this.UrlTextBox.Size = new System.Drawing.Size(504, 23);
             this.UrlTextBox.TabIndex = 6;
-            this.UrlTextBox.Text = "https://store.epicgames.com";
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.RefreshButton);
+            this.tabPage3.Controls.Add(this.ExistingConfigsBox);
             this.tabPage3.Controls.Add(this.ConfigNameLabel);
             this.tabPage3.Controls.Add(this.ConfigNameBox);
             this.tabPage3.Controls.Add(this.LoadConfigButton);
@@ -526,9 +526,34 @@
             this.tabPage3.Text = "Save/Load";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // ExistingConfigsBox
+            // 
+            this.ExistingConfigsBox.FormattingEnabled = true;
+            this.ExistingConfigsBox.ItemHeight = 15;
+            this.ExistingConfigsBox.Location = new System.Drawing.Point(12, 104);
+            this.ExistingConfigsBox.Name = "ExistingConfigsBox";
+            this.ExistingConfigsBox.Size = new System.Drawing.Size(510, 304);
+            this.ExistingConfigsBox.TabIndex = 6;
+            // 
+            // ConfigNameLabel
+            // 
+            this.ConfigNameLabel.AutoSize = true;
+            this.ConfigNameLabel.Location = new System.Drawing.Point(12, 57);
+            this.ConfigNameLabel.Name = "ConfigNameLabel";
+            this.ConfigNameLabel.Size = new System.Drawing.Size(114, 15);
+            this.ConfigNameLabel.TabIndex = 5;
+            this.ConfigNameLabel.Text = "Configuration name";
+            // 
+            // ConfigNameBox
+            // 
+            this.ConfigNameBox.Location = new System.Drawing.Point(12, 75);
+            this.ConfigNameBox.Name = "ConfigNameBox";
+            this.ConfigNameBox.Size = new System.Drawing.Size(510, 23);
+            this.ConfigNameBox.TabIndex = 4;
+            // 
             // LoadConfigButton
             // 
-            this.LoadConfigButton.Location = new System.Drawing.Point(93, 104);
+            this.LoadConfigButton.Location = new System.Drawing.Point(528, 133);
             this.LoadConfigButton.Name = "LoadConfigButton";
             this.LoadConfigButton.Size = new System.Drawing.Size(75, 23);
             this.LoadConfigButton.TabIndex = 3;
@@ -538,7 +563,7 @@
             // 
             // SaveConfigButton
             // 
-            this.SaveConfigButton.Location = new System.Drawing.Point(12, 104);
+            this.SaveConfigButton.Location = new System.Drawing.Point(528, 31);
             this.SaveConfigButton.Name = "SaveConfigButton";
             this.SaveConfigButton.Size = new System.Drawing.Size(75, 23);
             this.SaveConfigButton.TabIndex = 2;
@@ -567,21 +592,15 @@
             this.Update.Enabled = true;
             this.Update.Tick += new System.EventHandler(this.Update_Tick);
             // 
-            // ConfigNameBox
+            // RefreshButton
             // 
-            this.ConfigNameBox.Location = new System.Drawing.Point(12, 75);
-            this.ConfigNameBox.Name = "ConfigNameBox";
-            this.ConfigNameBox.Size = new System.Drawing.Size(510, 23);
-            this.ConfigNameBox.TabIndex = 4;
-            // 
-            // ConfigNameLabel
-            // 
-            this.ConfigNameLabel.AutoSize = true;
-            this.ConfigNameLabel.Location = new System.Drawing.Point(12, 57);
-            this.ConfigNameLabel.Name = "ConfigNameLabel";
-            this.ConfigNameLabel.Size = new System.Drawing.Size(114, 15);
-            this.ConfigNameLabel.TabIndex = 5;
-            this.ConfigNameLabel.Text = "Configuration name";
+            this.RefreshButton.Location = new System.Drawing.Point(528, 104);
+            this.RefreshButton.Name = "RefreshButton";
+            this.RefreshButton.Size = new System.Drawing.Size(75, 23);
+            this.RefreshButton.TabIndex = 7;
+            this.RefreshButton.Text = "Refresh";
+            this.RefreshButton.UseVisualStyleBackColor = true;
+            this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
             // 
             // GUI
             // 
@@ -623,7 +642,7 @@
         private Label DomainLabel;
         private Label StartingAddressLabel;
         private Label UrlLabel;
-        private ComboBox VerificatorBox;
+        private ComboBox ValidatorTypeBox;
         private Label VerificatorLabel;
         private TabControl tabControl2;
         private TabPage tabPage4;
@@ -659,5 +678,7 @@
         private Label FolderNameLabel;
         private Label ConfigNameLabel;
         private TextBox ConfigNameBox;
+        private ListBox ExistingConfigsBox;
+        private Button RefreshButton;
     }
 }
