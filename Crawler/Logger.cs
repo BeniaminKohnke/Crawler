@@ -16,9 +16,19 @@ namespace Crawler
 
         public static void Log(LogLevel level, string message, string configName, Exception? e = null, [CallerMemberName] string memberName = "")
         {
-            if(!level.HasFlag(LogLevel.INFO))
+            if(level != LogLevel.INFO)
             {
-                DataAccess.SaveLog(LogLevel.INFO, message, configName, memberName);
+                var logObject = new Logger.LogObject
+                {
+                    Level = level,
+                    Message = message,
+                    CallerName = memberName,
+                    ConfigName = configName,
+                    InternalException = e,
+                    LogDate = DateTime.Now,
+                };
+
+                DataAccess.SaveLog(logObject);
             }
             _logQueue.Enqueue($"{memberName}:{level}:{message}{(e != null ? $":{e.Message}" : string.Empty)}");
         }

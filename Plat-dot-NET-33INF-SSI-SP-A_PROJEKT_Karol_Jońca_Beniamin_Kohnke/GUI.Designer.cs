@@ -33,6 +33,8 @@
             this.StopButton = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.LimitBox = new System.Windows.Forms.TextBox();
+            this.LimitLabel = new System.Windows.Forms.Label();
             this.LogBox = new System.Windows.Forms.ListBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.ExtractionMethodBox = new System.Windows.Forms.ComboBox();
@@ -73,6 +75,7 @@
             this.DomainTextBox = new System.Windows.Forms.TextBox();
             this.UrlTextBox = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.RefreshButton = new System.Windows.Forms.Button();
             this.ExistingConfigsBox = new System.Windows.Forms.ListBox();
             this.ConfigNameLabel = new System.Windows.Forms.Label();
             this.ConfigNameBox = new System.Windows.Forms.TextBox();
@@ -81,7 +84,6 @@
             this.FolderNameBox = new System.Windows.Forms.TextBox();
             this.FolderNameLabel = new System.Windows.Forms.Label();
             this.Update = new System.Windows.Forms.Timer(this.components);
-            this.RefreshButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -124,6 +126,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.LimitBox);
+            this.tabPage1.Controls.Add(this.LimitLabel);
             this.tabPage1.Controls.Add(this.LogBox);
             this.tabPage1.Controls.Add(this.StartButton);
             this.tabPage1.Controls.Add(this.StopButton);
@@ -134,6 +138,23 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Executor";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // LimitBox
+            // 
+            this.LimitBox.Location = new System.Drawing.Point(521, 6);
+            this.LimitBox.Name = "LimitBox";
+            this.LimitBox.Size = new System.Drawing.Size(100, 23);
+            this.LimitBox.TabIndex = 7;
+            this.LimitBox.TextChanged += new System.EventHandler(this.LimitBox_TextChanged);
+            // 
+            // LimitLabel
+            // 
+            this.LimitLabel.AutoSize = true;
+            this.LimitLabel.Location = new System.Drawing.Point(477, 7);
+            this.LimitLabel.Name = "LimitLabel";
+            this.LimitLabel.Size = new System.Drawing.Size(39, 15);
+            this.LimitLabel.TabIndex = 6;
+            this.LimitLabel.Text = "LIMIT:";
             // 
             // LogBox
             // 
@@ -526,6 +547,16 @@
             this.tabPage3.Text = "Save/Load";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // RefreshButton
+            // 
+            this.RefreshButton.Location = new System.Drawing.Point(528, 104);
+            this.RefreshButton.Name = "RefreshButton";
+            this.RefreshButton.Size = new System.Drawing.Size(75, 23);
+            this.RefreshButton.TabIndex = 7;
+            this.RefreshButton.Text = "Refresh";
+            this.RefreshButton.UseVisualStyleBackColor = true;
+            this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
+            // 
             // ExistingConfigsBox
             // 
             this.ExistingConfigsBox.FormattingEnabled = true;
@@ -592,16 +623,6 @@
             this.Update.Enabled = true;
             this.Update.Tick += new System.EventHandler(this.Update_Tick);
             // 
-            // RefreshButton
-            // 
-            this.RefreshButton.Location = new System.Drawing.Point(528, 104);
-            this.RefreshButton.Name = "RefreshButton";
-            this.RefreshButton.Size = new System.Drawing.Size(75, 23);
-            this.RefreshButton.TabIndex = 7;
-            this.RefreshButton.Text = "Refresh";
-            this.RefreshButton.UseVisualStyleBackColor = true;
-            this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
-            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -612,6 +633,7 @@
             this.Text = "Crawler";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.tabControl2.ResumeLayout(false);
@@ -680,5 +702,7 @@
         private TextBox ConfigNameBox;
         private ListBox ExistingConfigsBox;
         private Button RefreshButton;
+        private TextBox LimitBox;
+        private Label LimitLabel;
     }
 }

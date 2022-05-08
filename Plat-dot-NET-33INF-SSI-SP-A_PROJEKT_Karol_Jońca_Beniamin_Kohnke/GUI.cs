@@ -95,8 +95,15 @@ namespace CrawlerGUI
 
         private void RefreshButton_Click(object sender, EventArgs e)
         {
+            DataAccess.UpdateConfigurationFiles();
+            DataAccess.UpdateDataFolders();
             ExistingConfigsBox.Items.Clear();
             ExistingConfigsBox.Items.AddRange(DataAccess.GetConfigurations());
+        }
+
+        private void LimitBox_TextChanged(object sender, EventArgs e)
+        {
+            _algorithm.ItemsLimit = int.Parse(LimitBox.Text);
         }
     }
 }

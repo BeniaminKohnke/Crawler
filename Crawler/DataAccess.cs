@@ -16,6 +16,7 @@ namespace Crawler
         private readonly static string s_logFolderId;
         private static Dictionary<string, string> s_dataFoldersWithIds = new();
         private static Dictionary<string, string> s_configurationsWithIds = new();
+        private static Dictionary<string, string> s_currentFolderFilesIds = new();
         static DataAccess()
         {
             {
@@ -55,7 +56,7 @@ namespace Crawler
             UpdateDataFolders();
         }
 
-        private static void UpdateConfigurationFiles()
+        public static void UpdateConfigurationFiles()
         {
             var listRequest = s_driveService.Files.List();
             listRequest.Q = $"'{s_configurationsFolderId}' in parents";
@@ -64,13 +65,25 @@ namespace Crawler
             s_configurationsWithIds = response.ToDictionary(k => k.Name, v => v.Id);
         }
 
-        private static void UpdateDataFolders()
+        public static void UpdateDataFolders()
         {
             var listRequest = s_driveService.Files.List();
             listRequest.Q = $"'{s_dataFolderId}' in parents";
             listRequest.Fields = "nextPageToken, files(id, name)";
             var response = listRequest.Execute().Files;
             s_dataFoldersWithIds = response.ToDictionary(k => k.Name, v => v.Id);
+        }
+
+        public static void UpdateDataFolderFiles(string folderName)
+        {
+            s_currentFolderFilesIds.Clear();
+
+            var listRequest = s_driveService.Files.List();
+            listRequest.Q = $"'{s_dataFoldersWithIds[folderName]}' in parents";
+            listRequest.Fields = "nextPageToken, files(id, name)";
+            var response = listRequest.Execute().Files;
+            s_currentFolderFilesIds = response.ToDictionary(k => k.Name, v => v.Id);
+            s_currentFolderFilesIds.Add("FOLDER", folderName);
         }
 
         public static Dictionary<string, string> GetProductsFilesNamesWithIds(string folderName = "")
@@ -133,16 +146,74 @@ namespace Crawler
             createRequest.Upload();
         }
 
+        private static void CreateFolder(string folderName)
+        {
+            var fileData = new Google.Apis.Drive.v3.Data.File
+            {
+                Name = folderName,
+                Parents = new List<string>
+                {
+                    s_dataFolderId,
+                },
+                MimeType = "application/vnd.google-apps.folder",
+            };
+
+            var createRequest = s_driveService.Files.Create(fileData);
+            createRequest.Fields = "id";
+            createRequest.Execute();
+        }
+
         public static void SaveCrawlerResult(string folderName, List<string> urls)
         {
+            if (!s_dataFoldersWithIds.ContainsKey(folderName))
+            {
+                CreateFolder(folderName);
+                UpdateDataFolders();
+            }
 
+            if (!s_currentFolderFilesIds.ContainsKey("FOLDER") || !s_currentFolderFilesIds["FOLDER"].Equals(folderName))
+            {
+                UpdateDataFolderFiles(folderName);
+            }
+            else if (s_currentFolderFilesIds.ContainsKey("CRAWLING_RESULT.json"))
+            {
+                var deleteRequest = s_driveService.Files.Delete(s_dataFoldersWithIds["CRAWLING_RESULT.json"]);
+                deleteRequest.Execute();
+            }
+
+            var fileData = new Google.Apis.Drive.v3.Data.File
+            {
+                Name = $"CRAWLING_RESULT.json",
+                Parents = new List<string>
+                {
+                    s_dataFoldersWithIds[folderName],
+                },
+                MimeType = "application/json",
+            };
+
+            var serializedProduct = JsonConvert.SerializeObject(urls, Formatting.Indented);
+            using var fileContent = new MemoryStream(Encoding.UTF8.GetBytes(serializedProduct));
+            var createRequest = s_driveService.Files.Create(fileData, fileContent, fileData.MimeType);
+            createRequest.Fields = "id";
+            createRequest.Upload();
         }
 
         public static void SaveProduct(string folderName, Product product)
         {
-            if(s_dataFoldersWithIds.ContainsKey(product.Sku + ".json"))
+            if(!s_dataFoldersWithIds.ContainsKey(folderName))
             {
-                var deleteRequest = s_driveService.Files.Delete(s_dataFoldersWithIds[product.Sku + ".json"]);
+                CreateFolder(folderName);
+                UpdateDataFolders();
+            }
+            
+            if(!s_currentFolderFilesIds.ContainsKey("FOLDER") || !s_currentFolderFilesIds["FOLDER"].Equals(folderName))
+            {
+                UpdateDataFolderFiles(folderName);
+            }
+            
+            if(s_currentFolderFilesIds.ContainsKey(product.Sku + ".json"))
+            {
+                var deleteRequest = s_driveService.Files.Delete(s_currentFolderFilesIds[product.Sku + ".json"]);
                 deleteRequest.Execute();
             }
 
@@ -163,18 +234,8 @@ namespace Crawler
             createRequest.Upload();
         }
 
-        public static void SaveLog(Logger.LogLevel level, string message, string configName, string memberName, Exception? e = null)
+        public static void SaveLog(Logger.LogObject logObject)
         {
-            var logObject = new Logger.LogObject
-            {
-                Level = level,
-                Message = message,
-                CallerName = memberName,
-                ConfigName = configName,
-                InternalException = e,
-                LogDate = DateTime.Now,
-            };
-
             var fileData = new Google.Apis.Drive.v3.Data.File
             {
                 Name = $"{logObject.LogDate}.json",
