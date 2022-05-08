@@ -15,7 +15,7 @@ namespace CrawlerTests
         [TestMethod]
         public void SaveProductTest()
         {
-            var product = new Product("TEST", "TEST@TEST.TEST", "TEST");
+            var product = new Product("TEST", "TEST@TEST.TEST", "TEST", 10, 10);
 
             DataAccess.SaveProduct("TEST", product);
         }
