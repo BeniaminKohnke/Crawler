@@ -191,8 +191,8 @@ namespace Crawler
                 MimeType = "application/json",
             };
 
-            var serializedProduct = JsonConvert.SerializeObject(urls, Formatting.Indented);
-            using var fileContent = new MemoryStream(Encoding.UTF8.GetBytes(serializedProduct));
+            var serializedResult = JsonConvert.SerializeObject(urls, Formatting.Indented);
+            using var fileContent = new MemoryStream(Encoding.UTF8.GetBytes(serializedResult));
             var createRequest = s_driveService.Files.Create(fileData, fileContent, fileData.MimeType);
             createRequest.Fields = "id";
             createRequest.Upload();
@@ -246,8 +246,8 @@ namespace Crawler
                 MimeType = "application/json",
             };
 
-            var serializedProduct = JsonConvert.SerializeObject(logObject);
-            using var fileContent = new MemoryStream(Encoding.UTF8.GetBytes(serializedProduct));
+            var serializedLog = JsonConvert.SerializeObject(logObject);
+            using var fileContent = new MemoryStream(Encoding.UTF8.GetBytes(serializedLog));
             var createRequest = s_driveService.Files.Create(fileData, fileContent, fileData.MimeType);
             createRequest.Fields = "id";
             createRequest.Upload();
