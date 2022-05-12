@@ -246,7 +246,7 @@ namespace Crawler
                 MimeType = "application/json",
             };
 
-            var serializedLog = JsonConvert.SerializeObject(logObject);
+            var serializedLog = JsonConvert.SerializeObject(logObject, Formatting.Indented);
             using var fileContent = new MemoryStream(Encoding.UTF8.GetBytes(serializedLog));
             var createRequest = s_driveService.Files.Create(fileData, fileContent, fileData.MimeType);
             createRequest.Fields = "id";

@@ -14,13 +14,8 @@ namespace CrawlerGUI
 
         private void StartButton_Click(object sender, EventArgs e)
         {
-            if(!string.IsNullOrEmpty(UrlTextBox.Text) && !_algorithm.IsRunning)
+            if (!string.IsNullOrEmpty(ConfigNameBox.Text) && !_algorithm.IsRunning)
             {
-                _algorithm.Url = UrlTextBox.Text;
-                _algorithm.StartingUrl = StartingPageTextBox.Text;
-                _algorithm.Regex = ValidatorTextBox.Text;
-                _algorithm.Domain = DomainTextBox.Text;
-
                 new Thread(() => _algorithm.Run()).Start();
             }
         }
@@ -32,9 +27,10 @@ namespace CrawlerGUI
 
         private void Update_Tick(object sender, EventArgs e)
         {
-            if(Logger.TryGetLog(out var log) && log != null)
+            if (Logger.TryGetLog(out var log) && log != null)
             {
                 LogBox.Items.Add(log);
+                LogBox.SelectedIndex = LogBox.Items.Count - 1;
             }
         }
 
@@ -69,7 +65,7 @@ namespace CrawlerGUI
         private void LoadConfigButton_Click(object sender, EventArgs e)
         {
             var config = _algorithm.LoadConfiguration(ExistingConfigsBox.Text);
-            if(config != null)
+            if (config != null)
             {
                 FolderNameBox.Text = config.SaveFolderName;
                 ConfigNameBox.Text = config.ConfigurationName;

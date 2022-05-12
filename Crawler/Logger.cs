@@ -18,7 +18,7 @@ namespace Crawler
         {
             if(level != LogLevel.INFO)
             {
-                var logObject = new Logger.LogObject
+                var logObject = new LogObject
                 {
                     Level = level,
                     Message = message,
@@ -37,7 +37,7 @@ namespace Crawler
 
         public class LogObject
         {
-            public Logger.LogLevel Level = Logger.LogLevel.WARNING;
+            public LogLevel Level = LogLevel.WARNING;
             public string Message = string.Empty;
             public string CallerName = string.Empty;
             public string ConfigName = string.Empty;
