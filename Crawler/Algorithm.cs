@@ -48,14 +48,12 @@ namespace Crawler
 
         public void Run()
         {
-
             if (_configuration != null)
             {
                 Logger.Log(Logger.LogLevel.INFO, "Crawling process started.", _configuration.ConfigurationName);
                 IsRunning = true;
 
                 RunCrawler();
-
                 _storedUrls = _storedUrls.Distinct().ToList();
 
                 switch (_configuration.ExtractionMethod)
@@ -266,7 +264,6 @@ namespace Crawler
             foreach (var url in _storedUrls)
             {
                 HtmlDocument? document = null;
-
                 try
                 {
                     using var client = new HttpClient();
@@ -278,7 +275,6 @@ namespace Crawler
                         document = new HtmlDocument();
                         document.LoadHtml(Encoding.Default.GetString(response));
                     }
-
                 }
                 catch (Exception e)
                 {
@@ -355,7 +351,6 @@ namespace Crawler
             foreach (var url in _storedUrls)
             {
                 JObject? document = null;
-
                 try
                 {
                     var requestHeaders = _configuration.RequestHeaders
@@ -365,7 +360,6 @@ namespace Crawler
                         .ToDictionary(k => k[0], v => v[1]);
 
                     var httpContent = new FormUrlEncodedContent(requestHeaders);
-
                     using var client = new HttpClient();
                     client.BaseAddress = new Uri(url);
                     var response = client.PostAsync(url, httpContent).Result;
@@ -374,7 +368,6 @@ namespace Crawler
                     {
                         document = JObject.Parse(Encoding.Default.GetString(response.Content.ReadAsByteArrayAsync().Result));
                     }
-
                 }
                 catch (Exception e)
                 {

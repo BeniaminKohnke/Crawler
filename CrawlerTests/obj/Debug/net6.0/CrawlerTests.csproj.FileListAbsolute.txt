@@ -105,3 +105,4 @@ C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\CrawlerTests\obj\Debug\net6.0\refi
 C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\CrawlerTests\obj\Debug\net6.0\CrawlerTests.pdb
 C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\CrawlerTests\obj\Debug\net6.0\CrawlerTests.genruntimeconfig.cache
 C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\CrawlerTests\obj\Debug\net6.0\ref\CrawlerTests.dll
+C:\Users\benia\Documents\GitHub\DOTNETCRAWLER\CrawlerTests\bin\Debug\net6.0\HtmlAgilityPack.dll

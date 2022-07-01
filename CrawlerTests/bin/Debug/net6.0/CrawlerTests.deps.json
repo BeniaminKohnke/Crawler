@@ -69,6 +69,14 @@
           }
         }
       },
+      "HtmlAgilityPack/1.11.42": {
+        "runtime": {
+          "lib/netstandard2.0/HtmlAgilityPack.dll": {
+            "assemblyVersion": "1.11.42.0",
+            "fileVersion": "1.11.42.0"
+          }
+        }
+      },
       "Microsoft.CodeCoverage/16.11.0": {
         "runtime": {
           "lib/netcoreapp1.0/Microsoft.VisualStudio.CodeCoverage.Shim.dll": {
@@ -473,7 +481,7 @@
       "runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
-      "Selenium.WebDriver/4.1.0": {
+      "Selenium.WebDriver/4.1.1": {
         "dependencies": {
           "Newtonsoft.Json": "13.0.1"
         },
@@ -484,7 +492,6 @@
           }
         }
       },
-      "Selenium.WebDriver.MSEdgeDriver/100.0.1185.36": {},
       "System.AppContext/4.3.0": {
         "dependencies": {
           "System.Runtime": "4.3.0"
@@ -1073,9 +1080,9 @@
       "Crawler/1.0.0": {
         "dependencies": {
           "Google.Apis.Drive.v3": "1.57.0.2663",
+          "HtmlAgilityPack": "1.11.42",
           "Newtonsoft.Json": "13.0.1",
-          "Selenium.WebDriver": "4.1.0",
-          "Selenium.WebDriver.MSEdgeDriver": "100.0.1185.36"
+          "Selenium.WebDriver": "4.1.1"
         },
         "runtime": {
           "Crawler.dll": {}
@@ -1123,6 +1130,13 @@
       "sha512": "sha512-TlEM9uv+qnoLQPzubEAFZffu/U17gXRmFFdL4iuo3AJ7bru50bZa7bQDCdf/O8SgMdE0ykUM4OoVDP7SGQFs5g==",
       "path": "google.apis.drive.v3/1.57.0.2663",
       "hashPath": "google.apis.drive.v3.1.57.0.2663.nupkg.sha512"
+    },
+    "HtmlAgilityPack/1.11.42": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LDc1bEfF14EY2DZzak4xvzWvbpNXK3vi1u0KQbBpLUN4+cx/VrvXhgCAMSJhSU5vz0oMfW9JZIR20vj/PkDHPA==",
+      "path": "htmlagilitypack/1.11.42",
+      "hashPath": "htmlagilitypack.1.11.42.nupkg.sha512"
     },
     "Microsoft.CodeCoverage/16.11.0": {
       "type": "package",
@@ -1320,19 +1334,12 @@
       "path": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl/4.3.0",
       "hashPath": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512"
     },
-    "Selenium.WebDriver/4.1.0": {
+    "Selenium.WebDriver/4.1.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-d4smisz4a/wJCM2TzkKTl+BLfvZUTvaobhKElDfCVZlvY8ThsC8VAoBNWTlg1H/GGzIP//yVGko/W0FILTgkYA==",
-      "path": "selenium.webdriver/4.1.0",
-      "hashPath": "selenium.webdriver.4.1.0.nupkg.sha512"
-    },
-    "Selenium.WebDriver.MSEdgeDriver/100.0.1185.36": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-tQfNKwSrwnJ63DFB8SoZOUg/ZxAdB/xnBWnmojJhEyyGAx5W82ktuFvPrr9vSzzz3TOswg8pfwmBRIKEviBs+w==",
-      "path": "selenium.webdriver.msedgedriver/100.0.1185.36",
-      "hashPath": "selenium.webdriver.msedgedriver.100.0.1185.36.nupkg.sha512"
+      "sha512": "sha512-lUPsSZMoIcDxB5tlppSPUUTMsaZovuUv/rXyYlroM0L3kl32cedOWbZ4m/hbJe9f24JlOqkPG8GX4gS35S+vSw==",
+      "path": "selenium.webdriver/4.1.1",
+      "hashPath": "selenium.webdriver.4.1.1.nupkg.sha512"
     },
     "System.AppContext/4.3.0": {
       "type": "package",
